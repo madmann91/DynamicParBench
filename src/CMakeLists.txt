@@ -1,0 +1,7 @@
+set(CUDA_SEPARABLE_COMPILATION ON)
+cuda_add_executable(bench_naive   main.cpp bench.cu naive.cu   common.cuh OPTIONS -std=c++11 -arch=sm_52 -DBENCH_FN=process_naive)
+cuda_add_executable(bench_blocked main.cpp bench.cu blocked.cu common.cuh OPTIONS -std=c++11 -arch=sm_52 -DBENCH_FN=process_blocked)
+cuda_add_executable(bench_bsearch main.cpp bench.cu bsearch.cu common.cuh OPTIONS -std=c++11 -arch=sm_52 -DBENCH_FN=process_bsearch)
+cuda_add_executable(bench_dynamic main.cpp bench.cu dynamic.cu common.cuh OPTIONS -std=c++11 -arch=sm_52 -DBENCH_FN=process_dynamic)
+find_library(CUDADEVRT NAMES cudadevrt.dll libcudadevrt.a PATHS ${CUDA_TOOLKIT_ROOT_DIR}/lib64 ${CUDA_TOOLKIT_ROOT_DIR}/lib)
+target_link_libraries(bench_dynamic ${CUDADEVRT} ${CUDA_LIBRARIES})
